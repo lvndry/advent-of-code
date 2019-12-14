@@ -7,7 +7,24 @@ fn main() {
         .map(|num| num.parse::<usize>().unwrap())
         .collect();
 
-    println!("Final vector {:?}", get_opcode(input, 12, 2));
+    println!("Part 1 {}", part1(input.clone()));
+    println!("Part 2 {}", part2(input.clone()));
+}
+
+fn part1(input: Vec<usize>) -> usize {
+    get_opcode(input, 12, 2)
+}
+
+fn part2(input: Vec<usize>) -> usize {
+    for noun in 0..99 {
+        for verb in 0..99 {
+            if get_opcode(input.clone(), noun, verb) == 19690720 {
+                return 100 * noun + verb;
+            }
+        }
+    }
+
+    unreachable!()
 }
 
 fn get_opcode(mut input: Vec<usize>, noun: usize, verb: usize) -> usize {
