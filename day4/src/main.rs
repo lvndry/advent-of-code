@@ -18,7 +18,12 @@ fn is_valid(num: &u32) -> bool {
         num / 1 % 10,
     ];
 
-    is_sorted(&digits) && digits.windows(2).any(|win| win[0] == win[1])
+    is_sorted(&digits)
+        && digits.windows(2).enumerate().any(|(i, win)| {
+            win[0] == win[1]
+                && *digits.get(i - 1).unwrap_or(&0) != win[0]
+                && *digits.get(i + 2).unwrap_or(&0) != win[0]
+        })
 }
 
 fn is_sorted<T>(data: &[T]) -> bool
@@ -27,20 +32,3 @@ where
 {
     data.windows(2).all(|w| w[0] <= w[1])
 }
-
-// fn calculate_possible_passwd(start: u32, _end: u32) -> u32 {
-//     find_strictly_increasing_num(start, 6)
-// }
-//
-// fn find_strictly_increasing_num(start: u32, len: i32) -> u32 {
-//     let mut sum = 0;
-//     if len == 0 {
-//         sum += 1;
-//     }
-//
-//     for i in start..9 {
-//         find_strictly_increasing_num(i + 1, len - 1);
-//     }
-//
-//     sum
-// }
